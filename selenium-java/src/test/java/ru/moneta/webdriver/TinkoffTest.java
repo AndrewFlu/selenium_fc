@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-public class GoogleSearchTest {
+public class TinkoffTest {
     private WebDriver driver;
     private WebDriverWait wait;
 
