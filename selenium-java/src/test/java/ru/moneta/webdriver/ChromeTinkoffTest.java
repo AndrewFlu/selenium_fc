@@ -11,7 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-public class ChromeTinkoffTest {
+public class ChromeTinkoffTest extends TestBase{
+
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -39,12 +40,6 @@ public class ChromeTinkoffTest {
         driver.findElement(By.xpath("//div[@class='header__2TQTh']//span[5]//a[1]")).click();
         wait.until(titleIs("Тинькофф Мобайл — связь, какой она должна быть"));
     }
-
-    @Test
-    public void testDataQaAttribute() {
-        driver.get("https://tinkoff.ru");
-    }
-
 
     @After
     public void stop() {

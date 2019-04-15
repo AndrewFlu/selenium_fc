@@ -15,10 +15,10 @@ import java.util.Set;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-public class FirefoxTinkoffTest {
+public class FirefoxTinkoffTest extends TestBase {
 
-    WebDriver driver;
-    WebDriverWait wait;
+    private WebDriver driver;
+    private WebDriverWait wait;
 
     @Before
     public void init() {
@@ -39,6 +39,7 @@ public class FirefoxTinkoffTest {
         driver.findElement(By.xpath("//div[@class='header__2TQTh']//span[5]//a[1]")).click();
         wait.until(titleIs("Тинькофф Мобайл — связь, какой она должна быть"));
     }
+
 
     @After
     public void stop() {
