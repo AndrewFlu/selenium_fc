@@ -24,10 +24,6 @@ public class FirefoxTinkoffTest extends TestBase {
     public void init() {
         FirefoxOptions options = new FirefoxOptions().setLegacy(false);
         driver = new FirefoxDriver(options);
-        Cookie cookieNamed = driver.manage().getCookieNamed("test");
-        driver.manage().deleteCookie(cookieNamed);
-        Set<Cookie> cookies = driver.manage().getCookies();
-        driver.manage().deleteAllCookies();
         System.out.println(((HasCapabilities) driver).getCapabilities());
         wait = new WebDriverWait(driver, 5);
     }
