@@ -1,33 +1,27 @@
-package ru.moneta.webdriver;
+package ru.different.browsers;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.Set;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-public class FirefoxTinkoffTest extends TestBase {
+public class SafariTinkoffTest {
+
 
     private WebDriver driver;
     private WebDriverWait wait;
 
     @Before
     public void init() {
-        FirefoxOptions options = new FirefoxOptions().setLegacy(false);
-        driver = new FirefoxDriver(options);
-        System.out.println(((HasCapabilities) driver).getCapabilities());
+        driver = new SafariDriver();
+        System.out.println(((SafariDriver) driver).getCapabilities());
         wait = new WebDriverWait(driver, 5);
     }
-
 
     @Test
     public void testTinkoffMobilePage() {
@@ -36,11 +30,9 @@ public class FirefoxTinkoffTest extends TestBase {
         wait.until(titleIs("Тинькофф Мобайл — связь, какой она должна быть"));
     }
 
-
     @After
     public void stop() {
         driver.quit();
         driver = null;
     }
-
 }

@@ -16,5 +16,5 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 }
 test{
-    maxParallelForks = 7;
+    maxParallelForks = 10;
 }

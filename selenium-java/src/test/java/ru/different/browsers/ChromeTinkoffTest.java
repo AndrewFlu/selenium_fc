@@ -1,4 +1,4 @@
-package ru.moneta.webdriver;
+package ru.different.browsers;
 
 import org.junit.After;
 import org.junit.Before;
@@ -8,10 +8,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.moneta.webdriver.TestBase;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-public class ChromeTinkoffTest extends TestBase{
+public class ChromeTinkoffTest extends TestBase {
 
     private WebDriver driver;
     private WebDriverWait wait;
