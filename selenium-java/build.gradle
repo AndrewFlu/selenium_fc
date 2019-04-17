@@ -14,7 +14,8 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    implementation 'ru.stqa.selenium:webdriver-factory:4.3'
 }
 test{
-    maxParallelForks = 10;
+    maxParallelForks = 3
 }

@@ -16,7 +16,7 @@ import java.util.Set;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-public class FirefoxTinkoffTest extends TestBase {
+public class FirefoxTinkoffTest {
 
     private WebDriver driver;
     private WebDriverWait wait;

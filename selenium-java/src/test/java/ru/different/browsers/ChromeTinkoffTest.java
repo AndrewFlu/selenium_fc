@@ -12,7 +12,7 @@ import ru.moneta.webdriver.TestBase;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-public class ChromeTinkoffTest extends TestBase {
+public class ChromeTinkoffTest {
 
     private WebDriver driver;
     private WebDriverWait wait;
