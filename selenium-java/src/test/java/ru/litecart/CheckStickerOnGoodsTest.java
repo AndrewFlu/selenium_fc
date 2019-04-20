@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 public class CheckStickerOnGoodsTest extends TestBase {
@@ -17,8 +18,10 @@ public class CheckStickerOnGoodsTest extends TestBase {
 
         assertTrue(products.size() > 0);
 
-        for (int i = 0; i < products.size(); i++){
+        for (WebElement product : products){
             assertTrue(isElementPresent(By.cssSelector("div.sticker")));
+            List<WebElement> stickersInProduct = product.findElements(By.cssSelector("div.sticker"));
+            assertEquals("У товара должен быть только один стикер", 1, stickersInProduct.size());
         }
     }
 }
