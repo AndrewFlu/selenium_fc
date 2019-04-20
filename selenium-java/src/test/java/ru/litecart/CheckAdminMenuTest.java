@@ -21,9 +21,9 @@ public class CheckAdminMenuTest extends TestBase {
 
         List<WebElement> menuItems = driver.findElements(By.cssSelector("ul.list-vertical > li"));
 
+        assertTrue(menuItems.size() > 0);
 
         for (int i = 1; i <= menuItems.size(); i++) {
-
 
             WebElement menuItem = driver.findElement(By.cssSelector(String.format("ul.list-vertical > li:nth-of-type(%d)", i)));
             menuItem.click();
@@ -38,5 +38,4 @@ public class CheckAdminMenuTest extends TestBase {
             }
         }
     }
-
 }
