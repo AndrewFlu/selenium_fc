@@ -18,6 +18,7 @@ public class TestBase {
     }
 
     protected void login(String username, String password) {
+        driver.get("http://localhost/litecart/admin/login.php");
         driver.findElement(By.cssSelector("input[name=username]")).sendKeys(username);
         driver.findElement(By.cssSelector("input[name=password]")).sendKeys(password);
         driver.findElement(By.cssSelector("button[name=login]")).click();
