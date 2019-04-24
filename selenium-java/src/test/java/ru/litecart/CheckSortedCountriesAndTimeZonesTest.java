@@ -9,7 +9,7 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class CountiesOrderedByAlphabeticalTest extends TestBase {
+public class CheckSortedCountriesAndTimeZonesTest extends TestBase {
 
     @Test
     public void testCountiesSortedByAlphabeticalOrder() {
@@ -63,21 +63,65 @@ public class CountiesOrderedByAlphabeticalTest extends TestBase {
             }
         }
 
-        for (String url : hrefToTimeZone){
+        for (String url : hrefToTimeZone) {
 
             List<String> actualTimeZones = new ArrayList<>();
             driver.get(url);
             List<WebElement> timeZoneElements = driver.findElements(By.cssSelector("table#table-zones td:nth-of-type(3) input[type='hidden']"));
 
-            for (WebElement zoneElement : timeZoneElements){
+            for (WebElement zoneElement : timeZoneElements) {
                 actualTimeZones.add(zoneElement.getAttribute("value"));
             }
-            sortedTimeZones.clear();;
+            sortedTimeZones.clear();
+            ;
             sortedTimeZones.addAll(actualTimeZones);
             Collections.sort(sortedTimeZones);
 
-            for (int i = 0; i < actualTimeZones.size(); i++){
+            for (int i = 0; i < actualTimeZones.size(); i++) {
                 assertEquals(sortedTimeZones.get(i), actualTimeZones.get(i));
+            }
+        }
+    }
+
+    @Test
+    public void testTimeZonesOrderInCountries() {
+
+        String username = "admin";
+        String password = "admin";
+        login(username, password);
+        List<String> countryUrlList = new ArrayList<>();
+
+        driver.get("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
+
+        List<WebElement> elements = driver.findElements(By.cssSelector("table.dataTable tr.row"));
+
+        for (WebElement element : elements) {
+            WebElement country = element.findElement(By.cssSelector("td:nth-of-type(3)"));
+            String url = country.findElement(By.cssSelector("a")).getAttribute("href");
+            countryUrlList.add(url);
+        }
+
+        for (int i = 0; i < countryUrlList.size(); i++) {
+            driver.get(countryUrlList.get(i));
+            final List<WebElement> selectorsList = driver.findElements(By.cssSelector("table.dataTable td:nth-of-type(3) select"));
+
+
+
+            for (WebElement selector : selectorsList) {
+
+                List<String> actualOptions = new ArrayList<>();
+                List<String> sortedOptions = new ArrayList<>();
+
+                List<WebElement> options = selector.findElements(By.cssSelector("option"));
+
+                for (WebElement option : options) {
+                    actualOptions.add(option.getAttribute("textContent"));
+                }
+
+                actualOptions.remove(0);
+                sortedOptions.addAll(actualOptions);
+                Collections.sort(sortedOptions);
+                assertEquals(sortedOptions, actualOptions);
             }
         }
     }
