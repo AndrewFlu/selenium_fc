@@ -83,15 +83,15 @@ public class GoodsPageOpensProperlyTest extends TestBase{
 
             //10 в
             assertEquals("line-through", mainPageProductAttributes.get("PriceDecoration"));
-            assertEquals("rgba(119, 119, 119, 1)", mainPageProductAttributes.get("PriceColor"));
-            assertEquals("rgba(102, 102, 102, 1)", childPageAttribute.get("PriceColor"));
+            assertTrue(mainPageProductAttributes.get("PriceColor").contains("119, 119, 119"));
+            assertTrue(childPageAttribute.get("PriceColor").contains("102, 102, 102"));
             assertEquals("line-through", childPageAttribute.get("PriceDecoration"));
 
             //10 г
-            assertEquals("rgba(204, 0, 0, 1)", mainPageProductAttributes.get("SalePriceColor"));
-            assertEquals("700", mainPageProductAttributes.get("SalePriceFont"));
-            assertEquals("rgba(204, 0, 0, 1)", childPageAttribute.get("SalePriceColor"));
-            assertEquals(mainPageProductAttributes.get("SalePriceFont"), childPageAttribute.get("SalePriceFont"));
+            assertTrue(mainPageProductAttributes.get("SalePriceColor").contains("204, 0, 0"));
+            assertTrue(Integer.parseInt(mainPageProductAttributes.get("SalePriceFont")) >= 700);
+            assertTrue(childPageAttribute.get("SalePriceColor").contains("204, 0, 0"));
+            assertTrue(Integer.parseInt(childPageAttribute.get("SalePriceFont")) >= 700);
 
             //10д
             assertTrue(Integer.parseInt(mainPageProductAttributes.get("SalePriceDimensionsHeight")) > Integer.parseInt(mainPageProductAttributes.get("PriceDimensionsHeight")));
