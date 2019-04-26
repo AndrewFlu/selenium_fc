@@ -5,24 +5,26 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebElement;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class GoodsPageOpensProperlyTest extends TestBase{
+public class GoodsPageOpensProperlyTest extends TestBase {
 
     @Test
-    public void checkOpeningGoodsPage(){
+    public void checkOpeningGoodsPage() {
+        String red;
+        String green;
+        String blue;
+
         driver.get("http://localhost/litecart/en/");
         final WebElement campaignsBlock = driver.findElement(By.cssSelector("div#box-campaigns"));
         final List<WebElement> goods = campaignsBlock.findElements(By.cssSelector("li.product"));
 
-        for (WebElement product : goods){
-
-            Map<String, String> mainPageProductAttributes = new HashMap<>();
+        for (WebElement product : goods) {
 
             final String mainPageName = product.findElement(By.cssSelector("div.name")).getAttribute("textContent");
             final String mainPagePrice = product.findElement(By.cssSelector("s.regular-price")).getAttribute("textContent");
@@ -34,23 +36,9 @@ public class GoodsPageOpensProperlyTest extends TestBase{
             final Rectangle mainPageSalePriceDimensions = product.findElement(By.cssSelector("strong.campaign-price")).getRect();
             final String mainPageSalePriceFont = product.findElement(By.cssSelector("strong.campaign-price")).getCssValue("font-weight");
 
-            mainPageProductAttributes.put("Name", mainPageName);
-            mainPageProductAttributes.put("Price", mainPagePrice);
-            mainPageProductAttributes.put("PriceColor", mainPagePriceColor);
-            mainPageProductAttributes.put("PriceDecoration", mainPagePriceDecoration);
-            mainPageProductAttributes.put("PriceDimensionsHeight", String.valueOf(mainPagePriceDimensions.height));
-            mainPageProductAttributes.put("PriceDimensionsWidth", String.valueOf(mainPagePriceDimensions.width));
-            mainPageProductAttributes.put("SalePrice", mainPageSalePrice);
-            mainPageProductAttributes.put("SalePriceColor", mainPageSalePriceColor);
-            mainPageProductAttributes.put("SalePriceDimensionsHeight", String.valueOf(mainPageSalePriceDimensions.height));
-            mainPageProductAttributes.put("SalePriceDimensionsWidth", String.valueOf(mainPageSalePriceDimensions.width));
-            mainPageProductAttributes.put("SalePriceFont", mainPageSalePriceFont);
-
             product.click();
 
-            Map <String, String> childPageAttribute = new HashMap<>();
             final String childPageProductName = driver.findElement(By.cssSelector("h1.title")).getAttribute("textContent");
-
             final WebElement childPagePriceElement = driver.findElement(By.cssSelector("div.information s.regular-price"));
             final String childPagePrice = childPagePriceElement.getAttribute("textContent");
             final String childPagePriceDecoration = childPagePriceElement.getCssValue("text-decoration-line");
@@ -62,44 +50,71 @@ public class GoodsPageOpensProperlyTest extends TestBase{
             final String childPageSalePriceFont = childPageSalePriceElement.getCssValue("font-weight");
             final Rectangle childPageSalePriceDimensions = childPageSalePriceElement.getRect();
 
-            childPageAttribute.put("Name", childPageProductName);
-            childPageAttribute.put("Price", childPagePrice);
-            childPageAttribute.put("PriceColor", childPagePriceColor);
-            childPageAttribute.put("PriceDecoration", childPagePriceDecoration);
-            childPageAttribute.put("PriceDimensionsHeight", String.valueOf(childPagePriceDimensions.height));
-            childPageAttribute.put("PriceDimensionsWidth", String.valueOf(childPagePriceDimensions.width));
-            childPageAttribute.put("SalePrice", childPageSalePrice);
-            childPageAttribute.put("SalePriceColor", childPageSalePriceColor);
-            childPageAttribute.put("SalePriceDimensionsHeight", String.valueOf(childPageSalePriceDimensions.height));
-            childPageAttribute.put("SalePriceDimensionsWidth", String.valueOf(childPageSalePriceDimensions.width));
-            childPageAttribute.put("SalePriceFont", childPageSalePriceFont);
-
             //10 a
-            assertEquals(mainPageProductAttributes.get("Name"), childPageAttribute.get("Name"));
+            assertEquals(mainPageName, childPageProductName);
 
             //10 б
-            assertEquals(mainPageProductAttributes.get("Price"), childPageAttribute.get("Price"));
-            assertEquals(mainPageProductAttributes.get("SalePrice"), childPageAttribute.get("SalePrice"));
+            assertEquals(mainPagePrice, childPagePrice);
+            assertEquals(mainPageSalePrice, childPageSalePrice);
 
             //10 в
-            assertEquals("line-through", mainPageProductAttributes.get("PriceDecoration"));
-            assertTrue(mainPageProductAttributes.get("PriceColor").contains("119, 119, 119"));
-            assertTrue(childPageAttribute.get("PriceColor").contains("102, 102, 102"));
-            assertEquals("line-through", childPageAttribute.get("PriceDecoration"));
+            assertEquals("line-through", mainPagePriceDecoration);
+            assertEquals("line-through", childPagePriceDecoration);
+
+            red = getColorCode(mainPagePriceColor, 1);
+            green = getColorCode(mainPagePriceColor, 2);
+            blue = getColorCode(mainPagePriceColor, 3);
+
+            assertEquals(red, green);
+            assertEquals(red, blue);
+
+            red = getColorCode(childPagePriceColor, 1);
+            green = getColorCode(childPagePriceColor, 2);
+            blue = getColorCode(childPagePriceColor, 3);
+
+            assertEquals(red, green);
+            assertEquals(red, blue);
+
 
             //10 г
-            assertTrue(mainPageProductAttributes.get("SalePriceColor").contains("204, 0, 0"));
-            assertTrue(Integer.parseInt(mainPageProductAttributes.get("SalePriceFont")) >= 700);
-            assertTrue(childPageAttribute.get("SalePriceColor").contains("204, 0, 0"));
-            assertTrue(Integer.parseInt(childPageAttribute.get("SalePriceFont")) >= 700);
+            green = getColorCode(mainPageSalePriceColor, 2);
+            blue = getColorCode(mainPageSalePriceColor, 3);
+
+            assertTrue("0".equals(green));
+            assertTrue("0".equals(blue));
+
+            green = getColorCode(childPageSalePriceColor, 2);
+            blue = getColorCode(childPageSalePriceColor, 3);
+
+            assertTrue("0".equals(green));
+            assertTrue("0".equals(blue));
+
+            assertTrue(Integer.parseInt(mainPageSalePriceFont) >= 700);
+            assertTrue(Integer.parseInt(childPageSalePriceFont) >= 700);
 
             //10д
-            assertTrue(Integer.parseInt(mainPageProductAttributes.get("SalePriceDimensionsHeight")) > Integer.parseInt(mainPageProductAttributes.get("PriceDimensionsHeight")));
-            assertTrue(Integer.parseInt(mainPageProductAttributes.get("SalePriceDimensionsWidth")) > Integer.parseInt(mainPageProductAttributes.get("PriceDimensionsWidth")));
+            assertTrue(mainPageSalePriceDimensions.height > mainPagePriceDimensions.height);
+            assertTrue(mainPageSalePriceDimensions.width > mainPagePriceDimensions.width);
 
-            assertTrue(Integer.parseInt(childPageAttribute.get("SalePriceDimensionsHeight")) > Integer.parseInt(childPageAttribute.get("PriceDimensionsHeight")));
-            assertTrue(Integer.parseInt(childPageAttribute.get("SalePriceDimensionsWidth")) > Integer.parseInt(childPageAttribute.get("PriceDimensionsWidth")));
+            assertTrue(childPageSalePriceDimensions.height > childPagePriceDimensions.height);
+            assertTrue(childPageSalePriceDimensions.width > childPagePriceDimensions.width);
         }
 
+    }
+
+    private String getColorCode(String color, int colorIndex) throws Error {
+        String code = null;
+
+        Pattern p = Pattern.compile("(\\d+)\\D+(\\d+)\\D+(\\d+)");
+        Matcher matcher = p.matcher(color);
+        try {
+            if (matcher.find()) {
+                code = matcher.group(colorIndex);
+            }
+
+        } catch (Exception e) {
+            throw new Error("Cannot find any correlative color code" + e.getMessage());
+        }
+        return code;
     }
 }
