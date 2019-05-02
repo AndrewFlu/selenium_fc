@@ -19,8 +19,8 @@ public class TestBase {
         driver = new ChromeDriver();
 //        driver = new FirefoxDriver();
 
-        wait = new WebDriverWait(driver, 3);
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        wait = new WebDriverWait(driver, 5);
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     }
 
     protected void login(String username, String password) {
