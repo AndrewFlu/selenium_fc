@@ -7,7 +7,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
@@ -17,7 +21,7 @@ public class ChromeTinkoffTest {
     private WebDriverWait wait;
 
     @Before
-    public void init() {
+    public void init() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
 
@@ -28,8 +32,8 @@ public class ChromeTinkoffTest {
 //        caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
 //        driver = new InternetExplorerDriver(caps);
 
-        driver = new ChromeDriver(options);
-        System.out.println(((ChromeDriver) driver).getCapabilities());
+        driver = new RemoteWebDriver(new URL("http://192.168.0.102:4444/"), options);
+//        System.out.println(((ChromeDriver) driver).getCapabilities());
         wait = new WebDriverWait(driver, 5);
     }
 
