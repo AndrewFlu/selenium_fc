@@ -1,21 +1,24 @@
 package ru.litecart;
 
+import net.lightbody.bmp.BrowserMobProxy;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
-    EventFiringWebDriver driver;
-    WebDriverWait wait;
+    public EventFiringWebDriver driver;
+    public WebDriverWait wait;
 
     public static class MyListener extends AbstractWebDriverEventListener {
         @Override
@@ -35,14 +38,15 @@ public class TestBase {
     }
 
     @Before
-    public void start() throws MalformedURLException {
-//        driver = new ChromeDriver();
-//        driver = new FirefoxDriver();
+    public void start() {
+
         driver = new EventFiringWebDriver(new ChromeDriver());
         driver.register(new MyListener());
-
         wait = new WebDriverWait(driver, 5);
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        List<LogEntry> logs = new ArrayList<>();
+        driver.manage().logs().get("browser").getAll().forEach(logEntry -> logs.add(logEntry));
+
     }
 
     protected void login(String username, String password) {

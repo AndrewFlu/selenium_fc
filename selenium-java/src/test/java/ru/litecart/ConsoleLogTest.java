@@ -3,8 +3,13 @@ package ru.litecart;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.logging.LogEntry;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ConsoleLogTest extends TestBase {
 
@@ -12,6 +17,8 @@ public class ConsoleLogTest extends TestBase {
     public void consoleLogTest() {
         String username = "admin";
         String password = "admin";
+        List<LogEntry> logs = new ArrayList<>();
+
         driver.get("http://localhost/litecart/admin/login.php");
         login(username, password);
         goToCatalog();
@@ -23,6 +30,10 @@ public class ConsoleLogTest extends TestBase {
             driver.findElement(By.xpath(String.format("//form/table/tbody/tr[td/img][%d]/td[3]/a", i))).click();
             driver.navigate().back();
         }
+
+        driver.manage().logs().get("browser").getAll().forEach(logEntry -> logs.add(logEntry));
+
+        assertEquals(0, logs.size());
 
     }
 
