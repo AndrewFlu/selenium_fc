@@ -1,24 +1,25 @@
 package ru.litecart;
 
 import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.BrowserMobProxyServer;
+import net.lightbody.bmp.client.ClientUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
-    public EventFiringWebDriver driver;
-    public WebDriverWait wait;
 
     public static class MyListener extends AbstractWebDriverEventListener {
         @Override
@@ -37,15 +38,29 @@ public class TestBase {
         }
     }
 
+
+    public EventFiringWebDriver driver;
+    public WebDriverWait wait;
+    public BrowserMobProxy proxy;
+
     @Before
     public void start() {
 
-        driver = new EventFiringWebDriver(new ChromeDriver());
+        // start the proxy
+        proxy = new BrowserMobProxyServer();
+        proxy.start(0);
+
+        // get the Selenium proxy object
+        Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+
+        // configure it as a desired capability
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
+        driver = new EventFiringWebDriver(new ChromeDriver(capabilities));
         driver.register(new MyListener());
         wait = new WebDriverWait(driver, 5);
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        List<LogEntry> logs = new ArrayList<>();
-        driver.manage().logs().get("browser").getAll().forEach(logEntry -> logs.add(logEntry));
+        driver.manage().logs().get("browser").getAll();
 
     }
 

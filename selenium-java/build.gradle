@@ -15,7 +15,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
     implementation 'ru.stqa.selenium:webdriver-factory:4.3'
-    implementation ('net.lightbody.bmp:browsermob-core:2.1.5'){
+    compile ('net.lightbody.bmp:browsermob-core:2.1.5'){
         exclude module: 'selenium'
     }
 }
