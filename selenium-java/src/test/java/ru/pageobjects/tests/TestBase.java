@@ -1,10 +1,7 @@
-package ru.pageobjects;
+package ru.pageobjects.tests;
 
 import org.junit.Before;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
+import ru.pageobjects.app.Application;
 
 public class TestBase {
 

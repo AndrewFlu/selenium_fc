@@ -1,11 +1,13 @@
-package ru.pageobjects;
+package ru.pageobjects.app;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.pageobjects.pages.CartPage;
+import ru.pageobjects.pages.MainPage;
+import ru.pageobjects.pages.ProductPage;
 
 import java.util.List;
 
@@ -34,16 +36,13 @@ public class Application {
         mainPage.open();
     }
 
-    public void returnToMainPage() {
-        driver.findElement(By.cssSelector("header div#logotype-wrapper")).click();
-    }
 
     public void getProductToCart(int quantity) throws InterruptedException {
 
         for (int i = 0; i < quantity; i++) {
             chooseFirstProductInMainPage();
             productPage.addToCart(i);
-            returnToMainPage();
+            cartPage.returnToMainPage();
         }
     }
 
@@ -51,17 +50,12 @@ public class Application {
         mainPage.cart.click();
     }
 
-    public void deleteEveryProductInCart(int quantity) {
-        goToCart();
-
-
-        while (cartPage.tableData.size() > 0) {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("form[name='cart_form'] button[value='Remove']")));
-            cartPage.removeButton.click();
-            wait.until(ExpectedConditions.stalenessOf(cartPage.tableData.get(0)));
-        }
-        returnToMainPage();
+    public void deleteProductsFromCart(int productsQuantity) {
+        cartPage.deleteEveryProductInCart(productsQuantity);
     }
+
+    ;
+
 
     public int checkoutCart() {
         WebElement cart = cartPage.cartDiv;

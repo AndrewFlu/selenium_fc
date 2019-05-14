@@ -22,3 +22,7 @@ dependencies {
 test{
     maxParallelForks = 3
 }
+
+tasks.withType(JavaCompile){
+    options.encoding = 'UTF-8'
+}

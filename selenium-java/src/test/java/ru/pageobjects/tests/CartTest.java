@@ -1,4 +1,4 @@
-package ru.pageobjects;
+package ru.pageobjects.tests;
 
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ public class CartTest extends TestBase {
         int goodsInCart = app.checkoutCart();
 
         assertEquals(productQuantityToCart, goodsInCart);
-        app.deleteEveryProductInCart(goodsInCart);
+        app.deleteProductsFromCart(goodsInCart);
 
         assertEquals(0, app.checkoutCart());
     }
