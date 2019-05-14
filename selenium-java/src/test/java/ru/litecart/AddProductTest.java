@@ -6,7 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-public class AddProductTest extends TestBase {
+public class AddProductTest extends AdminLoginTest.TestBase {
 
     @Test
     public void testNewProductAddition() throws InterruptedException {

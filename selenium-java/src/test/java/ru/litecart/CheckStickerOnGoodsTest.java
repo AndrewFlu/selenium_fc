@@ -9,7 +9,7 @@ import java.util.List;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
-public class CheckStickerOnGoodsTest extends TestBase {
+public class CheckStickerOnGoodsTest extends AdminLoginTest.TestBase {
 
     @Test
     public void testGoodsHaveStickers(){

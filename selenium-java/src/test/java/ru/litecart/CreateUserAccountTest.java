@@ -6,7 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 
-public class CreateUserAccountTest extends TestBase {
+public class CreateUserAccountTest extends AdminLoginTest.TestBase {
 
     @Test
     public void testUserAccountCreation() {

@@ -9,7 +9,7 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class CheckSortedCountriesAndTimeZonesTest extends TestBase {
+public class CheckSortedCountriesAndTimeZonesTest extends AdminLoginTest.TestBase {
 
     @Test
     public void testCountiesSortedByAlphabeticalOrder() {

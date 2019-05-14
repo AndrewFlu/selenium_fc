@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class GoodsPageOpensProperlyTest extends TestBase {
+public class GoodsPageOpensProperlyTest extends AdminLoginTest.TestBase {
 
     @Test
     public void checkOpeningGoodsPage() {

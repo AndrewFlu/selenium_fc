@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class ConsoleLogTest extends TestBase {
+public class ConsoleLogTest extends AdminLoginTest.TestBase {
 
     @Test
     public void consoleLogTest() {

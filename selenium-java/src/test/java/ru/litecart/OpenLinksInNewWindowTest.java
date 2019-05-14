@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import java.util.List;
 import java.util.Set;
 
-public class OpenLinksInNewWindowTest extends TestBase {
+public class OpenLinksInNewWindowTest extends AdminLoginTest.TestBase {
 
     @Test
     public void testOpenLinksInNewWindow() {
